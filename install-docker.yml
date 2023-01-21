@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: 172.31.32.171
+  hosts: testserver
   become: true
   tasks:
     - name: Update apt package index
