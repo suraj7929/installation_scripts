@@ -4,11 +4,11 @@
   become: true
   tasks:
     - name: Update apt package index
-      apt:
+      yum:
         update_cache: yes
 
     - name: Install Docker
-      apt:
+      yum:
         name: docker.io
         state: present
 
