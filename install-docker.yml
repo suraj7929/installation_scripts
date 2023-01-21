@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: testserver
+  hosts: all
   become: true
   tasks:
     - name: Update apt package index
