@@ -1,13 +1,24 @@
 #!/bin/bash
 
-# Update the package list
-sudo apt-get update
+puppet_master_ip=$1
+puppet_master_port=$2
+puppet_master_certname=$3
 
-# Install the Puppet agent
-sudo apt-get install -y puppet-agent
+# Install package manager
+yum update -y
+yum install -y wget
 
-# Configure the Puppet agent
-sudo echo -e "[agent]\nserver = ${1}\nport = ${2}\ncertname = ${3}" > /etc/puppetlabs/puppet/puppet.conf
+# Add Puppetlabs package repository
+rpm -Uvh https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
 
-# Start the Puppet agent
-sudo systemctl start puppet
+# Install Puppet agent
+yum install -y puppet-agent
+
+# Configure Puppet agent
+echo "[agent]
+server = ${puppet_master_ip}
+port = ${puppet_master_port}
+certname = ${puppet_master_certname}" > /etc/puppetlabs/puppet/puppet.conf
+
+# Start and enable Puppet agent
+/opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
